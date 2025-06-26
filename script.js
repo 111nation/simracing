@@ -32,9 +32,7 @@ window.showProductDetail = function(idx) {
     <span class="product-detail-title">${p.title}</span>
     <div class="product-detail-top">
       <div class="product-detail-title-img">
-        <div class="product-detail-img-wrap">
-          ${p.image ? `<img src="${p.image}" alt="${p.title}" class="product-detail-img">` : ''}
-        </div>
+        <div class="product-detail-img-wrap"></div>
       </div>
       <div class="product-detail-info-block">
         <span class="product-detail-rating">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
@@ -64,6 +62,15 @@ window.showProductDetail = function(idx) {
 
   // Show notif bar
   document.querySelector('.notif-bar').classList.add('show');
+
+  // Set the background image for the product-detail-img-wrap
+  const imgWrap = detail.querySelector('.product-detail-img-wrap');
+  if (imgWrap && p.image) {
+    imgWrap.style.backgroundImage = `url('${p.image}')`;
+    imgWrap.style.backgroundSize = 'contain';
+    imgWrap.style.backgroundPosition = 'center';
+    imgWrap.style.backgroundRepeat = 'no-repeat';
+  }
 }
 
 window.hideProductDetail = function() {
