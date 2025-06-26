@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+.top-bar {
+    background: #222;
+    color: #fff;
+    padding: 16px 24px;
+    text-align: left;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+    z-index: 2000;
+    width: 100vw;
+    position:fixed;
+    left:0;
+    top:0;
+}
+.subscribe-container {
+    max-width: 420px;
+    width: 90vw;
+    margin: 32px auto;
+    margin-top: 100px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(30,30,30,0.10), 0 1.5px 8px rgba(30,180,91,0.07);
+    padding: 32px 18px 28px 18px;
+    border: 1.5px solid #e0e0e0;
+    box-sizing: border-box;
+}
+h1 {
+    font-size: 1.3em;
+    margin-bottom: 18px;
+}
+.subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.subscribe-form label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.subscribe-form input[type="email"] {
+    padding: 10px 12px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #fafbfc;
+    outline: none;
+    transition: border 0.2s;
+}
+.subscribe-form input[type="email"]:focus {
+    border: 1.5px solid #888;
+    background: #fff;
+}
+.checkbox-group {
+    margin: 14px 0 0 0;
+    font-size: 1em;
+    background: #f7f7f7;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.checkbox-group input[type="checkbox"] {
+    accent-color: #2ecc71;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+.checkbox-group label {
+    font-weight: 300;
+    font-size: 0.88em;
+    font-style: italic;
+}
+.subscribe-btn.detail-btn {
+    background: #ededed;
+    border: 1.5px solid #bbb;
+    border-radius: 7px;
+    padding: 12px 18px;
+    font-size: 1em;
+    color: #222;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, border 0.2s;
+    cursor: pointer;
+    display: inline-block;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(30,180,91,0.10);
+    margin-top: 18px;
+}
+.subscribe-btn.detail-btn:hover, .subscribe-btn.detail-btn:focus {
+    background: #e0e0e0;
+    border: 1.5px solid #888;
+}
+.back-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: #3366cc;
+    text-decoration: underline;
+    font-size: 1em;
+}
+.asterisk {
+    color: #e53935;
+    font-weight: bold;
+    margin-right: 2px;
+    font-size: 1.1em;
+    vertical-align: middle;
+}
+.mini-disclaimer {
+    width: 90vw;
+    max-width: 420px;
+    margin: 18px auto 0 auto;
+    color: #888;
+    font-size: 0.98em;
+    font-style: italic;
+    text-align: center;
+    line-height: 1.5;
+} 

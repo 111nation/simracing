@@ -29,9 +29,9 @@ window.showProductDetail = function(idx) {
   detail.innerHTML = `
     <button class="back-btn" onclick="hideProductDetail()">&larr; Back</button>
     <div class="product-detail-discount-badge${p.discount ? '' : ' hidden'}">${p.discount || ''}</div>
+    <span class="product-detail-title">${p.title}</span>
     <div class="product-detail-top">
       <div class="product-detail-title-img">
-        <span class="product-detail-title">${p.title}</span>
         <div class="product-detail-img-wrap">
           ${p.image ? `<img src="${p.image}" alt="${p.title}" class="product-detail-img">` : ''}
         </div>
@@ -57,28 +57,25 @@ window.showProductDetail = function(idx) {
   document.querySelector('.search-bar-container').style.display = 'none';
   document.querySelector('.controls-container').style.display = 'none';
 
-  // Render the sticky buy button after the product detail
-  let stickyBtn = document.getElementById('buyBtnStickyWrap');
-  if (!stickyBtn) {
-    stickyBtn = document.createElement('div');
-    stickyBtn.id = 'buyBtnStickyWrap';
-    stickyBtn.className = 'buy-btn-sticky-wrap sticky-up';
-    stickyBtn.innerHTML = '<button class="buy-btn">Buy at amazon.com</button>';
-    detail.parentNode.insertBefore(stickyBtn, detail.nextSibling);
-  } else {
-    stickyBtn.style.display = 'flex';
-    stickyBtn.classList.add('sticky-up');
-  }
+  // Render the buy button in its own container
+  const buyBtnContainer = document.getElementById('buyBtnContainer');
+  buyBtnContainer.innerHTML = '<button class="buy-btn">Buy at amazon.com</button>';
+  buyBtnContainer.style.display = 'block';
+
+  // Show notif bar
+  document.querySelector('.notif-bar').classList.add('show');
 }
 
 window.hideProductDetail = function() {
   document.getElementById('productDetail').style.display = 'none';
   document.getElementById('productGrid').style.display = 'grid';
-  let stickyBtn = document.getElementById('buyBtnStickyWrap');
-  if (stickyBtn) stickyBtn.style.display = 'none';
   // Show search, sort, and filter controls again
   document.querySelector('.search-bar-container').style.display = '';
   document.querySelector('.controls-container').style.display = '';
+  // Hide the buy button container
+  document.getElementById('buyBtnContainer').style.display = 'none';
+  // Hide notif bar
+  document.querySelector('.notif-bar').classList.remove('show');
 }
 
 function setSort(order) {
