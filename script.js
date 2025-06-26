@@ -28,18 +28,20 @@ window.showProductDetail = function(idx) {
   const detail = document.getElementById('productDetail');
   detail.innerHTML = `
     <button class="back-btn" onclick="hideProductDetail()">&larr; Back</button>
-    ${p.discount ? `<div class="product-detail-discount-badge">${p.discount}</div>` : ''}
-    <div class="product-detail-header">
-      <span class="product-detail-title">${p.title}</span>
-      <span class="product-detail-rating">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-    </div>
-    <div class="product-detail-summary">Includes blah blah blah</div>
-    <div class="product-detail-main-row">
-      <div class="product-detail-img-wrap">
-        ${p.image ? `<img src="${p.image}" alt="${p.title}" class="product-detail-img">` : ''}
+    <div class="product-detail-discount-badge${p.discount ? '' : ' hidden'}">${p.discount || ''}</div>
+    <div class="product-detail-top">
+      <div class="product-detail-title-img">
+        <span class="product-detail-title">${p.title}</span>
+        <div class="product-detail-img-wrap">
+          ${p.image ? `<img src="${p.image}" alt="${p.title}" class="product-detail-img">` : ''}
+        </div>
       </div>
-      <div class="product-detail-price-wrap">
-        <div class="product-price-detail">$${p.price} ${p.oldPrice ? `<span class='old-price'>$${p.oldPrice}</span>` : ""}</div>
+      <div class="product-detail-info-block">
+        <span class="product-detail-rating">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+        <div class="product-detail-summary">Includes blah blah blah</div>
+        <div class="product-detail-price-wrap">
+          <div class="product-price-detail">$${p.price} ${p.oldPrice ? `<span class='old-price'>$${p.oldPrice}</span>` : ""}</div>
+        </div>
       </div>
     </div>
     <p class="product-desc">${p.description || "No description available."}</p>
@@ -50,11 +52,33 @@ window.showProductDetail = function(idx) {
   `;
   document.getElementById('productGrid').style.display = 'none';
   detail.style.display = 'block';
+
+  // Hide search, sort, and filter controls
+  document.querySelector('.search-bar-container').style.display = 'none';
+  document.querySelector('.controls-container').style.display = 'none';
+
+  // Render the sticky buy button after the product detail
+  let stickyBtn = document.getElementById('buyBtnStickyWrap');
+  if (!stickyBtn) {
+    stickyBtn = document.createElement('div');
+    stickyBtn.id = 'buyBtnStickyWrap';
+    stickyBtn.className = 'buy-btn-sticky-wrap sticky-up';
+    stickyBtn.innerHTML = '<button class="buy-btn">Buy at amazon.com</button>';
+    detail.parentNode.insertBefore(stickyBtn, detail.nextSibling);
+  } else {
+    stickyBtn.style.display = 'flex';
+    stickyBtn.classList.add('sticky-up');
+  }
 }
 
 window.hideProductDetail = function() {
   document.getElementById('productDetail').style.display = 'none';
   document.getElementById('productGrid').style.display = 'grid';
+  let stickyBtn = document.getElementById('buyBtnStickyWrap');
+  if (stickyBtn) stickyBtn.style.display = 'none';
+  // Show search, sort, and filter controls again
+  document.querySelector('.search-bar-container').style.display = '';
+  document.querySelector('.controls-container').style.display = '';
 }
 
 function setSort(order) {
