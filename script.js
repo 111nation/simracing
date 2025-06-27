@@ -10,42 +10,94 @@ let filteredProducts = [...products];
 let currentSort = 'recommended';
 let lastFilter = { min: null, max: null };
 
+// Helper to get/set favourites in localStorage
+function getFavourites() {
+  return JSON.parse(localStorage.getItem('favourites') || '[]');
+}
+function setFavourites(favs) {
+  localStorage.setItem('favourites', JSON.stringify(favs));
+}
+
+// Add a favourite property to products if not present
+products.forEach(p => { if (p.favourite === undefined) p.favourite = false; });
+
+// On load, sync favourites from localStorage
+const favIds = getFavourites();
+products.forEach((p, i) => { p.favourite = favIds.includes(p.title); });
+
+function toggleFavourite(title) {
+  const favs = getFavourites();
+  const idx = favs.indexOf(title);
+  if (idx === -1) favs.push(title);
+  else favs.splice(idx, 1);
+  setFavourites(favs);
+  products.forEach(p => { p.favourite = favs.includes(p.title); });
+  // Re-render grid
+  renderProducts(filteredProducts);
+  // Update favourite button in detail view if open
+  const detail = document.getElementById('productDetail');
+  if (detail.style.display === 'block') {
+    const btn = detail.querySelector('.favourite-btn');
+    const p = products.find(p => p.title === title);
+    if (btn && p) {
+      btn.innerHTML = p.favourite ? '★ Remove Favourite' : '☆ Add Favourite';
+    }
+    // Also update the title star
+    const titleSpan = detail.querySelector('.product-detail-title');
+    if (titleSpan) {
+      titleSpan.innerHTML = p.title + (p.favourite ? ' ★' : '');
+    }
+  }
+}
+
 function renderProducts(list) {
+  // Favourites first unless sorted/filtered
+  let sortedList = list;
+  if (currentSort === 'recommended' && !window._filterActive) {
+    sortedList = [...list].sort((a, b) => (b.favourite ? 1 : 0) - (a.favourite ? 1 : 0));
+  }
   const grid = document.getElementById('productGrid');
-  grid.innerHTML = list.map((p, i) => `
-    <div class="product-card" onclick="showProductDetail(${i})">
+  grid.innerHTML = sortedList.map((p) => `
+    <div class="product-card${p.favourite ? ' favourite' : ''}" onclick="showProductDetailByTitle('${encodeURIComponent(p.title)}')">
       ${p.discount ? `<div class="discount-badge">${p.discount}</div>` : ""}
       <div class="product-info">
-        <div class="product-title">${p.title}</div>
-        <div class="product-price">$${p.price} ${p.oldPrice ? `<span class="old-price">$${p.oldPrice}</span>` : ""}</div>
+        <div class="product-title">${p.title} ${p.favourite ? '★' : ''}</div>
+        <div class="product-price">$${p.price} ${p.oldPrice ? `<span class=\"old-price\">$${p.oldPrice}</span>` : ""}</div>
       </div>
     </div>
   `).join('');
 }
 
-window.showProductDetail = function(idx) {
+window.showProductDetailByTitle = function(title) {
+  title = decodeURIComponent(title);
+  const idx = filteredProducts.findIndex(p => p.title === title);
+  if (idx !== -1) showProductDetail(idx);
+}
+
+window.showProductDetail = function(idx, pushState = true) {
   const p = filteredProducts[idx];
   const detail = document.getElementById('productDetail');
   detail.innerHTML = `
-    <button class="back-btn" onclick="hideProductDetail()">&larr; Back</button>
-    <div class="product-detail-discount-badge${p.discount ? '' : ' hidden'}">${p.discount || ''}</div>
-    <span class="product-detail-title">${p.title}</span>
-    <div class="product-detail-top">
-      <div class="product-detail-title-img">
-        <div class="product-detail-img-wrap"></div>
+    <button class=\"back-btn\" onclick=\"hideProductDetail()\">&larr; Back</button>
+    <div class=\"product-detail-discount-badge${p.discount ? '' : ' hidden'}\">${p.discount || ''}</div>
+    <span class=\"product-detail-title\">${p.title} ${p.favourite ? '★' : ''}</span>
+    <div class=\"product-detail-top\">
+      <div class=\"product-detail-title-img\">
+        <div class=\"product-detail-img-wrap\"></div>
       </div>
-      <div class="product-detail-info-block">
-        <span class="product-detail-rating">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-        <div class="product-detail-summary">Includes blah blah blah</div>
-        <div class="product-detail-price-wrap">
-          <div class="product-price-detail">$${p.price} ${p.oldPrice ? `<span class='old-price'>$${p.oldPrice}</span>` : ""}</div>
+      <div class=\"product-detail-info-block\">
+        <span class=\"product-detail-rating\">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+        <div class=\"product-detail-summary\">Includes blah blah blah</div>
+        <div class=\"product-detail-price-wrap\">
+          <div class=\"product-price-detail\">$${p.price} ${p.oldPrice ? `<span class='old-price'>$${p.oldPrice}</span>` : ""}</div>
         </div>
       </div>
     </div>
-    <p class="product-desc">${p.description || "No description available."}</p>
-    <div class="detail-actions">
-      <a href="${p.video}" target="_blank" class="detail-btn">Video Reviews</a>
-      <a href="${p.reviews}" target="_blank" class="detail-btn">Customer Reviews</a>
+    <button class=\"favourite-btn\" onclick=\"event.stopPropagation();toggleFavourite('${p.title}')\">${p.favourite ? '★ Remove Favourite' : '☆ Add Favourite'}</button>
+    <p class=\"product-desc\">${p.description || "No description available."}</p>
+    <div class=\"detail-actions\">
+      <a href=\"${p.video}\" target=\"_blank\" class=\"detail-btn\">Video Reviews</a>
+      <a href=\"${p.reviews}\" target=\"_blank\" class=\"detail-btn\">Customer Reviews</a>
     </div>
   `;
   document.getElementById('productGrid').style.display = 'none';
@@ -67,13 +119,18 @@ window.showProductDetail = function(idx) {
   const imgWrap = detail.querySelector('.product-detail-img-wrap');
   if (imgWrap && p.image) {
     imgWrap.style.backgroundImage = `url('${p.image}')`;
-    imgWrap.style.backgroundSize = 'contain';
+    imgWrap.style.backgroundSize = 'cover';
     imgWrap.style.backgroundPosition = 'center';
     imgWrap.style.backgroundRepeat = 'no-repeat';
   }
+
+  // Push state to history for back button support
+  if (pushState) {
+    history.pushState({ productDetail: true }, '', '');
+  }
 }
 
-window.hideProductDetail = function() {
+window.hideProductDetail = function(popState = false) {
   document.getElementById('productDetail').style.display = 'none';
   document.getElementById('productGrid').style.display = 'grid';
   // Show search, sort, and filter controls again
@@ -83,7 +140,19 @@ window.hideProductDetail = function() {
   document.getElementById('buyBtnContainer').style.display = 'none';
   // Hide notif bar
   document.querySelector('.notif-bar').classList.remove('show');
+  // Only go back in history if not triggered by popstate
+  if (!popState && history.state && history.state.productDetail) {
+    history.back();
+  }
 }
+
+// Listen for browser back/forward
+window.addEventListener('popstate', function(e) {
+  const detail = document.getElementById('productDetail');
+  if (detail && detail.style.display === 'block') {
+    window.hideProductDetail(true);
+  }
+});
 
 function setSort(order) {
   currentSort = order;
