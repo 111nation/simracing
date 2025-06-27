@@ -705,4 +705,34 @@ button, .buy-btn, .detail-btn, .subscribe-btn {
         aspect-ratio: 1/1;
         box-sizing: border-box;
     }
+}
+.product-card.favourite {
+    border: 1.5px solid #ffe066;
+    box-shadow: 0 0 0 2px #fffbe6, 0 2px 12px 0 rgba(255,224,102,0.18);
+    transition: border 0.2s, box-shadow 0.2s;
+}
+.favourite-btn {
+    background: #fffbe6;
+    color: #ffb300;
+    border: 1.5px solid #ffb300;
+    border-radius: 7px;
+    padding: 10px 18px;
+    font-size: 1em;
+    font-weight: 600;
+    margin: 12px 0 8px 0;
+    cursor: pointer;
+    transition: background 0.2s, border 0.2s, color 0.2s;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+.favourite-btn:hover, .favourite-btn:focus {
+    background: #ffecb3;
+    color: #e65100;
+    border-color: #e65100;
+}
+.product-title .favourite-star {
+    color: #ffb300;
+    font-size: 1.1em;
+    margin-left: 2px;
 } 
