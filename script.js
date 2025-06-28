@@ -1,14 +1,170 @@
+// Define all available tags here for easy editing
+const availableTags = [
+  "Wheel",
+  "2 Pedals",
+  "3 Pedals",
+  "Paddle Shifters",
+  "Clutch",
+  "Gearbox",
+  "Handbrake",
+  "Force Feedback",
+  "Vibration",
+  "Shifter"
+];
+
+// Aliases map: alias -> canonical tag
+const tagAliases = {
+  "Clutch": "3 Pedals",
+  "Paddle Shifts": "Paddle Shifters",
+  "3 Pedal": "3 Pedals",
+  "Paddles": "Paddle Shifters",
+  "Shifter": "Gearbox",
+  "Vibration": "Vibration Feedback"
+  // Add more as needed
+};
+
+// List of tags to show as buttons (canonical + selected aliases)
+const tagButtons = [
+  ...availableTags,
+  ...Object.keys(tagAliases)
+];
+
 const products = [
-  { title: "Quality Tyres", price: 150, oldPrice: 200, discount: "-25%", description: "High-quality tyres for all terrains. Durable and reliable.", video: "https://www.youtube.com/results?search_query=tyres+review", reviews: "https://www.trustpilot.com/review/tyres.com", image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80" },
-  { title: "Shocks", price: 20, oldPrice: 30, discount: "-33%", description: "Premium shocks for a smooth ride.", video: "https://www.youtube.com/results?search_query=shocks+review", reviews: "https://www.trustpilot.com/review/shocks.com", image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=400&q=80" },
-  { title: "Ceramic Brake Pads", price: 125, oldPrice: 150, discount: "-16%", description: "Long-lasting ceramic brake pads for superior stopping power.", video: "https://www.youtube.com/results?search_query=ceramic+brake+pads+review", reviews: "https://www.trustpilot.com/review/brakepads.com", image: "https://images.unsplash.com/photo-1465146344425-f00d5f8b7885?auto=format&fit=crop&w=400&q=80" },
-  { title: "Interior Mats", price: 20, description: "Comfortable and easy-to-clean interior mats.", video: "https://www.youtube.com/results?search_query=interior+mats+review", reviews: "https://www.trustpilot.com/review/interiormats.com", image: "https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=400&q=80" },
-  { title: "Interior Mats", price: 20, description: "Comfortable and easy-to-clean interior mats.", video: "https://www.youtube.com/results?search_query=interior+mats+review", reviews: "https://www.trustpilot.com/review/interiormats.com", image: "https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=400&q=80" },
-  { title: "Interior Mats", price: 20, description: "Comfortable and easy-to-clean interior mats.", video: "https://www.youtube.com/results?search_query=interior+mats+review", reviews: "https://www.trustpilot.com/review/interiormats.com", image: "https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=400&q=80" }
+  {
+    title: "PXN V900 Gaming Steering Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/71dKxA9AxRL._SL1500_.jpg",
+    buyLink: "https://amzn.to/3GjFGb2",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration"]
+  },
+  {
+    title: "HORI Racing Wheel Apex",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/41YQ6-A5YIL._SX342_.jpg",
+    buyLink: "https://amzn.to/4khZ7iz",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration"]
+  },
+  {
+    title: "PXN V9 Steering Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/61pryi2dtdL._SX342_.jpg",
+    buyLink: "https://amzn.to/44nwSJh",
+    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Vibration"]
+  },
+  {
+    title: "PXN V3II Racing Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/71HLlsPBVXL._SX342_.jpg",
+    buyLink: "https://amzn.to/44gkZWV",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration", "Gearbox"]
+  },
+  {
+    title: "Superdrive SV450 Racing Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/812Oo+ztqzL._SX342_.jpg",
+    buyLink: "https://amzn.to/3TRWUiN",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration"]
+  },
+  {
+    title: "PXN V9 GEN2 Racing Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/61uU9YruRAL._SX342_.jpg",
+    buyLink: "https://amzn.to/4ezXEmn",
+    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Vibration Feedback"]
+  },
+  {
+    title: "DOYO Gaming Racing Wheel 1080 Degree",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/61Q1GzBkPML._SX342_.jpg",
+    buyLink: "https://amzn.to/4nofDQP",
+    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Clutch", "Vibration Feedback", "Force Feedback"]
+  },
+  {
+    title: "DOYO 270 Degree Racing Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/61yC4vaKfKL._SX342_.jpg",
+    buyLink: "https://amzn.to/3TRYD7L",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration", "Gearbox"]
+  },
+  {
+    title: "DOYO Gaming Steering Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/616o-mpEBDL._SX342_.jpg",
+    buyLink: "https://amzn.to/4lmQwvM",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "PC Compatible"]
+  },
+  {
+    title: "Superdrive GS850-X Racing Steering Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/71B9x5Fw9cL._SX342_.jpg",
+    buyLink: "https://amzn.to/4l4yq24",
+    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Handbrake", "Vibration"]
+  },
+  {
+    title: "DOYO Gaming Steering Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/71KyN4U8MtL._SX342_.jpg",
+    buyLink: "https://amzn.to/3I0mC1Z",
+    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Vibration Feedback"]
+  },
+  {
+    title: "THRUSTMASTER Ferrari 458 Spider Racing Wheel",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/61Q1qeI7B-S._SX342_.jpg",
+    buyLink: "https://amzn.to/3I0IjPz",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters"]
+  },
+  {
+    title: "SUBSONIC Superdrive GS550",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "",
+    image: "https://m.media-amazon.com/images/I/519D3HC067L._SX342_.jpg",
+    buyLink: "https://amzn.to/40urOS6",
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Shifter", "Vibration"]
+  }
 ];
 let filteredProducts = [...products];
 let currentSort = 'recommended';
 let lastFilter = { min: null, max: null };
+let selectedTags = [];
 
 // Helper to get/set favourites in localStorage
 function getFavourites() {
@@ -60,9 +216,13 @@ function renderProducts(list) {
   grid.innerHTML = sortedList.map((p) => `
     <div class="product-card${p.favourite ? ' favourite' : ''}" onclick="showProductDetailByTitle('${encodeURIComponent(p.title)}')">
       ${p.discount ? `<div class="discount-badge">${p.discount}</div>` : ""}
+      <div class="product-img-wrap" style="width: 100%; margin: auto; margin-bottom: 10px">
+        <img src="${p.image}" alt="${p.title}" style="width: 100%; height: auto; display: block; box-sizing: border-box;" />
+      </div>
       <div class="product-info">
         <div class="product-title">${p.title} ${p.favourite ? '★' : ''}</div>
-        <div class="product-price">$${p.price} ${p.oldPrice ? `<span class=\"old-price\">$${p.oldPrice}</span>` : ""}</div>
+        <!-- Price hidden -->
+        <!--<div class="product-price">$${p.price} ${p.oldPrice ? `<span class=\"old-price\">$${p.oldPrice}</span>` : ""}</div>-->
       </div>
     </div>
   `).join('');
@@ -77,31 +237,44 @@ window.showProductDetailByTitle = function(title) {
 window.showProductDetail = function(idx, pushState = true) {
   const p = filteredProducts[idx];
   const detail = document.getElementById('productDetail');
+
+  // Render tags for this product
+  const tagHtml = p.tags.map(tag => `<span class="product-tag">${tag}</span>`).join(' ');
+  // Render compatibility info
+  const compatTags = p.tags.filter(tag => tag.includes('Compatible'));
+  let compatHtml = '';
+  if (compatTags.length > 0) {
+    compatHtml = `<div class="product-compat"><b>Compatible with:</b> ${compatTags.join(', ')}</div>`;
+  }
+
   detail.innerHTML = `
     <button class=\"back-btn\" onclick=\"hideProductDetail()\">&larr; Back</button>
     <div class=\"product-detail-discount-badge${p.discount ? '' : ' hidden'}\">${p.discount || ''}</div>
     <span class=\"product-detail-title\">${p.title} ${p.favourite ? '★' : ''}</span>
+    <div class=\"product-detail-img-wrap\">
+      <img src="${p.image}" alt="${p.title}" class="product-detail-img" style="width: 100%; object-fit: cover; border-radius: 12px; margin: 18px 0 10px 0; display: block;" />
+    </div>
+    <div class=\"product-detail-tags\">${tagHtml}</div>
     <div class=\"product-detail-top\">
-      <div class=\"product-detail-title-img\">
-        <div class=\"product-detail-img-wrap\"></div>
-      </div>
       <div class=\"product-detail-info-block\">
-        <span class=\"product-detail-rating\">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-        <div class=\"product-detail-summary\">Includes blah blah blah</div>
         <div class=\"product-detail-price-wrap\">
-          <div class=\"product-price-detail\">$${p.price} ${p.oldPrice ? `<span class='old-price'>$${p.oldPrice}</span>` : ""}</div>
+          <!-- Price hidden -->
         </div>
       </div>
     </div>
     <button class=\"favourite-btn\" onclick=\"event.stopPropagation();toggleFavourite('${p.title}')\">${p.favourite ? '★ Remove Favourite' : '☆ Add Favourite'}</button>
-    <p class=\"product-desc\">${p.description || "No description available."}</p>
+    <p class=\"product-desc\">${compatHtml}${p.description || "No description available."}</p>
     <div class=\"detail-actions\">
-      <a href=\"${p.video}\" target=\"_blank\" class=\"detail-btn\">Video Reviews</a>
-      <a href=\"${p.reviews}\" target=\"_blank\" class=\"detail-btn\">Customer Reviews</a>
+      <a href=\"${p.video || '#'}\" target=\"_blank\" class=\"detail-btn\">Video Reviews</a>
+      <a href=\"${p.reviews || '#'}\" target=\"_blank\" class=\"detail-btn\">Customer Reviews</a>
     </div>
   `;
   document.getElementById('productGrid').style.display = 'none';
   detail.style.display = 'block';
+
+  // Hide tag filter bar
+  const tagFilterBar = document.getElementById('tagFilterBar');
+  if (tagFilterBar) tagFilterBar.style.display = 'none';
 
   // Hide search, sort, and filter controls
   document.querySelector('.search-bar-container').style.display = 'none';
@@ -109,20 +282,11 @@ window.showProductDetail = function(idx, pushState = true) {
 
   // Render the buy button in its own container
   const buyBtnContainer = document.getElementById('buyBtnContainer');
-  buyBtnContainer.innerHTML = '<button class="buy-btn">Buy at amazon.com</button>';
+  buyBtnContainer.innerHTML = `<a href="${p.buyLink}" target="_blank" class="buy-btn-link"><button class="buy-btn">Buy at amazon.com</button></a>`;
   buyBtnContainer.style.display = 'block';
 
   // Show notif bar
   document.querySelector('.notif-bar').classList.add('show');
-
-  // Set the background image for the product-detail-img-wrap
-  const imgWrap = detail.querySelector('.product-detail-img-wrap');
-  if (imgWrap && p.image) {
-    imgWrap.style.backgroundImage = `url('${p.image}')`;
-    imgWrap.style.backgroundSize = 'cover';
-    imgWrap.style.backgroundPosition = 'center';
-    imgWrap.style.backgroundRepeat = 'no-repeat';
-  }
 
   // Push state to history for back button support
   if (pushState) {
@@ -133,6 +297,9 @@ window.showProductDetail = function(idx, pushState = true) {
 window.hideProductDetail = function(popState = false) {
   document.getElementById('productDetail').style.display = 'none';
   document.getElementById('productGrid').style.display = 'grid';
+  // Show tag filter bar again
+  const tagFilterBar = document.getElementById('tagFilterBar');
+  if (tagFilterBar) tagFilterBar.style.display = '';
   // Show search, sort, and filter controls again
   document.querySelector('.search-bar-container').style.display = '';
   document.querySelector('.controls-container').style.display = '';
@@ -215,6 +382,51 @@ window.addEventListener('click', function(e) {
   if (!e.target.closest('.main-controls') && !e.target.closest('.filter-panel')) {
     document.getElementById('filterPanel').style.display = 'none';
   }
+});
+
+function getCanonicalTag(tag) {
+  return tagAliases[tag] || tag;
+}
+
+function filterByTags() {
+  if (selectedTags.length === 0) {
+    filteredProducts = [...products];
+  } else {
+    filteredProducts = products.filter(p =>
+      selectedTags.every(tag => {
+        const canonical = getCanonicalTag(tag);
+        return p.tags.includes(canonical);
+      })
+    );
+  }
+  renderProducts(filteredProducts);
+}
+
+// Dynamically render tag buttons from tagButtons (canonical + aliases)
+window.addEventListener('DOMContentLoaded', function() {
+  const tagList = document.querySelector('.tag-list');
+  if (tagList) {
+    tagList.innerHTML = tagButtons.map(tag => {
+      const isAlias = !!tagAliases[tag];
+      return `<button class="tag-btn${isAlias ? ' tag-alias' : ''}" data-tag="${tag}">${tag}</button>`;
+    }).join('');
+  }
+
+  // Tag button click logic (works with dynamic buttons)
+  let tagBtns = document.querySelectorAll('.tag-btn');
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const tag = btn.getAttribute('data-tag');
+      if (selectedTags.includes(tag)) {
+        selectedTags = selectedTags.filter(t => t !== tag);
+        btn.classList.remove('selected');
+      } else {
+        selectedTags.push(tag);
+        btn.classList.add('selected');
+      }
+      filterByTags();
+    });
+  });
 });
 
 // Initial render
