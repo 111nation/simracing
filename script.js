@@ -244,7 +244,7 @@ window.showProductDetail = function(idx, pushState = true) {
   const compatTags = p.tags.filter(tag => tag.includes('Compatible'));
   let compatHtml = '';
   if (compatTags.length > 0) {
-    compatHtml = `<div class="product-compat"><b>Compatible with:</b> ${compatTags.join(', ')}</div>`;
+    compatHtml = `<b>Compatible with:</b> ${compatTags.join(', ')}<br/><br/>`;
   }
 
   // Only show description if there is one or compatHtml is not empty
@@ -254,7 +254,7 @@ window.showProductDetail = function(idx, pushState = true) {
   }
   detail.innerHTML = `
     <div class=\"product-detail-actions\">
-      <button class=\"back-btn\" onclick=\"hideProductDetail()\">&larr; Back</button>
+    <button class=\"back-btn\" onclick=\"hideProductDetail()\">&larr; Back</button>
       <button class=\"favourite-btn\" onclick=\"event.stopPropagation();toggleFavourite('${p.title}')\">${p.favourite ? '★ Remove Favourite' : '☆ Add Favourite'}</button>
     </div>
     <div class=\"product-detail-discount-badge${p.discount ? '' : ' hidden'}\">${p.discount || ''}</div>
@@ -272,8 +272,8 @@ window.showProductDetail = function(idx, pushState = true) {
     </div>
     <p class=\"product-desc\">${compatHtml}${p.description || "No description available."}</p>
     <div class=\"detail-actions\">
-      <a href=\"${p.video || '#'}\" target=\"_blank\" class=\"detail-btn\">Video Reviews</a>
-      <a href=\"${p.reviews || '#'}\" target=\"_blank\" class=\"detail-btn\">Customer Reviews</a>
+      <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(p.title)}" target="_blank" class="detail-btn">Video Reviews</a>
+      <a href="${p.buyLink}#customerReviews" target="_blank" class="detail-btn">Customer Reviews</a>
     </div>
   `;
   document.getElementById('productGrid').style.display = 'none';
