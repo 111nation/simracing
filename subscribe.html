@@ -13,7 +13,9 @@
     </div>
     <div class="subscribe-container">
         <h1>Subscribe for Updates</h1>
-        <form class="subscribe-form" action="https://assets.mailerlite.com/jsonp/1624973/forms/158354729627288831/subscribe" data-code="" method="post" target="_blank">
+        <form class="subscribe-form" action="https://assets.mailerlite.com/jsonp/1624973/forms/158568698580305793/subscribe" data-code="" method="post" target="_blank">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="fields[name]" required placeholder="Your Name">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="fields[email]" required placeholder="you@email.com">
             <div class="checkbox-group">
@@ -27,6 +29,13 @@
         We know that you aren't ready to commit to a large purchase now. That is why we have an email subscription that will help and guide you make this choice slowly.
     </div>
     <div id="subscribeMessage" style="text-align:center;margin-top:1em;"></div>
+    <div id="subscribeSuccessPopup" class="subscribe-success-popup" style="display:none;">
+      <div class="subscribe-success-content">
+        <span class="subscribe-success-close" onclick="document.getElementById('subscribeSuccessPopup').style.display='none'">&times;</span>
+        <h2>🎉 Subscribed!</h2>
+        <p>Thank you for subscribing!<br>You'll be the first to know about price drops and new sim racing deals.</p>
+      </div>
+    </div>
     <script>
     document.querySelector('.subscribe-form').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -43,7 +52,13 @@
         })
         .then(res => res.json())
         .then(data => {
-            document.getElementById('subscribeMessage').textContent = data.success ? 'Thank you for subscribing!' : 'Subscription failed. Please try again.';
+            if (data.success) {
+                document.getElementById('subscribeSuccessPopup').style.display = 'flex';
+                document.getElementById('subscribeMessage').textContent = '';
+                form.reset();
+            } else {
+                document.getElementById('subscribeMessage').textContent = 'Subscription failed. Please try again.';
+            }
         })
         .catch(() => {
             document.getElementById('subscribeMessage').textContent = 'An error occurred. Please try again.';
