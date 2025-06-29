@@ -235,6 +235,7 @@ window.showProductDetailByTitle = function(title) {
 }
 
 window.showProductDetail = function(idx, pushState = true) {
+  window.scrollTo(0, 0);
   const p = filteredProducts[idx];
   const detail = document.getElementById('productDetail');
 
