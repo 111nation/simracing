@@ -816,10 +816,32 @@ button, .buy-btn, .detail-btn, .subscribe-btn {
   letter-spacing: 0.01em;
 }
 .tag-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, auto);
   gap: 10px;
-  justify-content: center;
+  justify-content: start;
+  align-content: start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 15px;
+  padding-top: 5px;
+  padding-left: 5px;
+  scrollbar-width: auto;
+  scrollbar-color: #888 #eee;
+  width: 85%;
+  margin: auto;
+}
+.tag-list::-webkit-scrollbar {
+  height: 8px;
+}
+.tag-list::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 4px;
+}
+.tag-list::-webkit-scrollbar-track {
+  background: #eee;
+  border-radius: 4px;
 }
 .tag-btn {
   background: #eee;
@@ -832,6 +854,7 @@ button, .buy-btn, .detail-btn, .subscribe-btn {
   transition: background 0.18s, border 0.18s, color 0.18s;
   outline: none;
   font-weight: 500;
+  white-space: nowrap;
 }
 .tag-btn.selected, .tag-btn:active {
   background: #ffe066;
