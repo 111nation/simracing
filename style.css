@@ -816,12 +816,12 @@ button, .buy-btn, .detail-btn, .subscribe-btn {
   letter-spacing: 0.01em;
 }
 .tag-list {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(2, auto);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 10px;
   justify-content: start;
-  align-content: start;
+  align-items: start;
   overflow-x: auto;
   overflow-y: hidden;
   padding-bottom: 15px;

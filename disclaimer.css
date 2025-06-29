@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    background: #fafbfc;
+    background: #f9f9f9;
     margin: 0;
     padding: 0;
     color: #222;
@@ -12,30 +12,35 @@ body {
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     padding: 28px 18px 22px 18px;
-
     width: 80vw;
+    border: 1.5px solid #eee;
 }
 h1 {
     font-size: 1.4em;
     margin-bottom: 16px;
+    color: #222;
 }
 p {
     font-size: 1em;
     line-height: 1.6;
     margin-bottom: 12px;
+    color: #444;
 }
 .back-link {
     display: inline-block;
     margin-top: 18px;
-    color: #3366cc;
+    color: #e53935;
     text-decoration: underline;
     font-size: 1em;
 }
 .top-bar {
     background: #222;
     color: #fff;
-    padding: 16px 24px;
+    padding: 20px 24px 18px 24px;
     text-align: left;
-    font-size: 1.2em;
+    font-size: 1.5em;
     letter-spacing: 1px;
+    font-weight: 700;
+    position: static;
+    box-shadow: none;
 } 
