@@ -118,7 +118,7 @@ const products = [
     description: "",
     image: "https://m.media-amazon.com/images/I/616o-mpEBDL._SX342_.jpg",
     buyLink: "https://amzn.to/4lmQwvM",
-    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "PC Compatible"]
+    tags: ["Wheel", "2 Pedals", "Paddle Shifters"]
   },
   {
     title: "Superdrive GS850-X Racing Steering Wheel",
@@ -235,7 +235,6 @@ window.showProductDetailByTitle = function(title) {
 }
 
 window.showProductDetail = function(idx, pushState = true) {
-  window.scrollTo(0, 0);
   const p = filteredProducts[idx];
   const detail = document.getElementById('productDetail');
 
@@ -274,7 +273,7 @@ window.showProductDetail = function(idx, pushState = true) {
     <p class=\"product-desc\">${compatHtml}${p.description || "No description available."}</p>
     <div class=\"detail-actions\">
       <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(p.title)}" target="_blank" class="detail-btn">Video Reviews</a>
-      <a href="${p.buyLink}#customerReviews" target="_blank" class="detail-btn">Customer Reviews</a>
+      <a href="${p.reviews || '#'}" target="_blank" class="detail-btn">Customer Reviews</a>
     </div>
   `;
   document.getElementById('productGrid').style.display = 'none';
