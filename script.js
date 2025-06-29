@@ -247,12 +247,20 @@ window.showProductDetail = function(idx, pushState = true) {
     compatHtml = `<div class="product-compat"><b>Compatible with:</b> ${compatTags.join(', ')}</div>`;
   }
 
+  // Only show description if there is one or compatHtml is not empty
+  let descHtml = '';
+  if (compatHtml || p.description) {
+    descHtml = `<p class=\"product-desc\">${compatHtml}${p.description || ''}</p>`;
+  }
   detail.innerHTML = `
-    <button class=\"back-btn\" onclick=\"hideProductDetail()\">&larr; Back</button>
+    <div class=\"product-detail-actions\">
+      <button class=\"back-btn\" onclick=\"hideProductDetail()\">&larr; Back</button>
+      <button class=\"favourite-btn\" onclick=\"event.stopPropagation();toggleFavourite('${p.title}')\">${p.favourite ? '★ Remove Favourite' : '☆ Add Favourite'}</button>
+    </div>
     <div class=\"product-detail-discount-badge${p.discount ? '' : ' hidden'}\">${p.discount || ''}</div>
     <span class=\"product-detail-title\">${p.title} ${p.favourite ? '★' : ''}</span>
     <div class=\"product-detail-img-wrap\">
-      <img src="${p.image}" alt="${p.title}" class="product-detail-img" style="width: 100%; object-fit: cover; border-radius: 12px; margin: 18px 0 10px 0; display: block;" />
+      <img src="${p.image}" alt="${p.title}" class="product-detail-img" style="width: 100%; object-fit: cover; border-radius: 12px; display: block;" />
     </div>
     <div class=\"product-detail-tags\">${tagHtml}</div>
     <div class=\"product-detail-top\">
@@ -262,7 +270,6 @@ window.showProductDetail = function(idx, pushState = true) {
         </div>
       </div>
     </div>
-    <button class=\"favourite-btn\" onclick=\"event.stopPropagation();toggleFavourite('${p.title}')\">${p.favourite ? '★ Remove Favourite' : '☆ Add Favourite'}</button>
     <p class=\"product-desc\">${compatHtml}${p.description || "No description available."}</p>
     <div class=\"detail-actions\">
       <a href=\"${p.video || '#'}\" target=\"_blank\" class=\"detail-btn\">Video Reviews</a>
