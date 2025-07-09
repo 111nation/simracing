@@ -111,7 +111,7 @@ const products = [
     tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration", "Gearbox"]
   },
   {
-    title: "DOYO Gaming Steering Wheel",
+    title: "DOYO Gaming Steering Wheel 270/900°",
     price: null,
     oldPrice: null,
     discount: "",
@@ -131,7 +131,7 @@ const products = [
     tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Handbrake", "Vibration"]
   },
   {
-    title: "DOYO Gaming Steering Wheel",
+    title: "DOYO Gaming Steering Wheel 900°/ 1080°",
     price: null,
     oldPrice: null,
     discount: "",
