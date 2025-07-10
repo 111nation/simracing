@@ -71,16 +71,6 @@ const products = [
     tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration", "Gearbox"]
   },
   {
-    title: "Superdrive SV450 Racing Wheel",
-    price: null,
-    oldPrice: null,
-    discount: "",
-    description: "",
-    image: "https://m.media-amazon.com/images/I/812Oo+ztqzL._SX342_.jpg",
-    buyLink: "https://amzn.to/3TRWUiN",
-    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration"]
-  },
-  {
     title: "PXN V9 GEN2 Racing Wheel",
     price: null,
     oldPrice: null,
@@ -95,7 +85,7 @@ const products = [
     price: null,
     oldPrice: null,
     discount: "",
-    description: "",
+    description: "Product seems to have some sort of force feedback. Double check before purchasing!",
     image: "https://m.media-amazon.com/images/I/61Q1GzBkPML._SX342_.jpg",
     buyLink: "https://amzn.to/4nofDQP",
     tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Clutch", "Vibration Feedback", "Force Feedback"]
@@ -111,36 +101,6 @@ const products = [
     tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Vibration", "Gearbox"]
   },
   {
-    title: "DOYO Gaming Steering Wheel 270/900°",
-    price: null,
-    oldPrice: null,
-    discount: "",
-    description: "",
-    image: "https://m.media-amazon.com/images/I/616o-mpEBDL._SX342_.jpg",
-    buyLink: "https://amzn.to/4lmQwvM",
-    tags: ["Wheel", "2 Pedals", "Paddle Shifters"]
-  },
-  {
-    title: "Superdrive GS850-X Racing Steering Wheel",
-    price: null,
-    oldPrice: null,
-    discount: "",
-    description: "",
-    image: "https://m.media-amazon.com/images/I/71B9x5Fw9cL._SX342_.jpg",
-    buyLink: "https://amzn.to/4l4yq24",
-    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Handbrake", "Vibration"]
-  },
-  {
-    title: "DOYO Gaming Steering Wheel 900°/ 1080°",
-    price: null,
-    oldPrice: null,
-    discount: "",
-    description: "",
-    image: "https://m.media-amazon.com/images/I/71KyN4U8MtL._SX342_.jpg",
-    buyLink: "https://amzn.to/3I0mC1Z",
-    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Vibration Feedback"]
-  },
-  {
     title: "THRUSTMASTER Ferrari 458 Spider Racing Wheel",
     price: null,
     oldPrice: null,
@@ -151,20 +111,64 @@ const products = [
     tags: ["Wheel", "2 Pedals", "Paddle Shifters"]
   },
   {
-    title: "SUBSONIC Superdrive GS550",
+    title: "PXN V99 Driving Force Steering Wheel",
     price: null,
     oldPrice: null,
     discount: "",
     description: "",
-    image: "https://m.media-amazon.com/images/I/519D3HC067L._SX342_.jpg",
-    buyLink: "https://amzn.to/40urOS6",
-    tags: ["Wheel", "2 Pedals", "Paddle Shifters", "Shifter", "Vibration"]
-  }
+    image: "https://m.media-amazon.com/images/I/61NojCFzwgL._SX342_.jpg",
+    buyLink: "https://amzn.to/4nUU22K",
+    tags: ["Wheel", "3 Pedals", "Paddle Shifters", "Gearbox", "Vibration", "Force Feedback"]
+  },
+  {
+    title: "THRUSTMASTER TMX",
+    price: null,
+    oldPrice: null,
+    discount: "",
+    description: "Product only includes a wheel only!",
+    image: "https://m.media-amazon.com/images/I/81ntMV+lb0L._SX342_.jpg",
+    buyLink: "https://amzn.to/4eG3hiV",
+    tags: ["Wheel", "Paddle Shifters", "Vibration", "Force Feedback"]
+  },
 ];
 let filteredProducts = [...products];
 let currentSort = 'recommended';
 let lastFilter = { min: null, max: null };
 let selectedTags = [];
+
+// --- Featured Products ---
+// Use a subset of the main products array for featured
+const featuredProductTitles = [
+  "PXN V900 Gaming Steering Wheel",
+  "HORI Racing Wheel Apex",
+  "PXN V9 Steering Wheel",
+  "PXN V3II Racing Wheel",
+  "PXN V9 GEN2 Racing Wheel",
+  "DOYO Gaming Racing Wheel 1080 Degree",
+  "DOYO 270 Degree Racing Wheel",
+  "THRUSTMASTER Ferrari 458 Spider Racing Wheel"
+];
+const featuredProducts = products.filter(p => featuredProductTitles.includes(p.title));
+
+// Featured row: all products with 'Force Feedback' tag
+function getFeaturedProducts() {
+  return products.filter(p => p.tags.includes('Force Feedback'));
+}
+
+function renderFeaturedProducts() {
+  const row = document.getElementById('featuredProductsRow');
+  if (!row) return;
+  const featuredProducts = getFeaturedProducts();
+  row.innerHTML = featuredProducts.map((p) => `
+    <div class=\"product-card${p.favourite ? ' favourite' : ''}\" onclick=\"showProductDetailByTitle('${encodeURIComponent(p.title)}')\">
+      <div class=\"product-img-wrap\" style=\"width: 100%; margin: auto; margin-bottom: 10px\">
+        <img src=\"${p.image}\" alt=\"${p.title}\" style=\"width: 100%; height: auto; display: block; box-sizing: border-box;\" />
+      </div>
+    </div>
+  `).join('');
+  // Show or hide row based on tag selection
+  row.style.display = (selectedTags.length === 0) ? '' : 'none';
+}
 
 // Helper to get/set favourites in localStorage
 function getFavourites() {
@@ -273,11 +277,18 @@ window.showProductDetail = function(idx, pushState = true) {
     <p class=\"product-desc\">${compatHtml}${p.description || "No description available."}</p>
     <div class=\"detail-actions\">
       <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(p.title)}" target="_blank" class="detail-btn">Video Reviews</a>
-      <a href="${p.reviews || '#'}" target="_blank" class="detail-btn">Customer Reviews</a>
+      <a href="${p.reviews || (p.buyLink ? p.buyLink + '#customerReviews' : '#')}" target="_blank" class="detail-btn">Customer Reviews</a>
     </div>
   `;
   document.getElementById('productGrid').style.display = 'none';
   detail.style.display = 'block';
+
+  // Hide featured products row
+  const featuredRow = document.getElementById('featuredProductsRow');
+  if (featuredRow) featuredRow.style.display = 'none';
+  // Hide banner
+  const banner = document.querySelector('.featured-row-banner');
+  if (banner) banner.style.display = 'none';
 
   // Hide tag filter bar
   const tagFilterBar = document.getElementById('tagFilterBar');
@@ -304,6 +315,12 @@ window.showProductDetail = function(idx, pushState = true) {
 window.hideProductDetail = function(popState = false) {
   document.getElementById('productDetail').style.display = 'none';
   document.getElementById('productGrid').style.display = 'grid';
+  // Show featured products row again
+  const featuredRow = document.getElementById('featuredProductsRow');
+  if (featuredRow) featuredRow.style.display = '';
+  // Show banner again
+  const banner = document.querySelector('.featured-row-banner');
+  if (banner && selectedTags.length === 0) banner.style.display = '';
   // Show tag filter bar again
   const tagFilterBar = document.getElementById('tagFilterBar');
   if (tagFilterBar) tagFilterBar.style.display = '';
@@ -318,6 +335,9 @@ window.hideProductDetail = function(popState = false) {
   if (!popState && history.state && history.state.productDetail) {
     history.back();
   }
+  // Re-render grid and featured row to reflect favourite changes
+  renderProducts(filteredProducts);
+  renderFeaturedProducts();
 }
 
 // Listen for browser back/forward
@@ -395,9 +415,15 @@ function getCanonicalTag(tag) {
   return tagAliases[tag] || tag;
 }
 
+// Update filterByTags to hide/show featured row
 function filterByTags() {
   if (selectedTags.length === 0) {
     filteredProducts = [...products];
+    // Show featured row and banner
+    const featuredRow = document.getElementById('featuredProductsRow');
+    if (featuredRow) featuredRow.style.display = '';
+    const banner = document.querySelector('.featured-row-banner');
+    if (banner) banner.style.display = '';
   } else {
     filteredProducts = products.filter(p =>
       selectedTags.every(tag => {
@@ -405,6 +431,11 @@ function filterByTags() {
         return p.tags.includes(canonical);
       })
     );
+    // Hide featured row and banner
+    const featuredRow = document.getElementById('featuredProductsRow');
+    if (featuredRow) featuredRow.style.display = 'none';
+    const banner = document.querySelector('.featured-row-banner');
+    if (banner) banner.style.display = 'none';
   }
   renderProducts(filteredProducts);
 }
@@ -432,9 +463,13 @@ window.addEventListener('DOMContentLoaded', function() {
         btn.classList.add('selected');
       }
       filterByTags();
+      renderFeaturedProducts(); // Ensure featured row updates instantly
+      renderProducts(filteredProducts); // Ensure grid updates instantly
+      btn.blur(); // Remove focus to prevent lingering :active/:focus style
     });
   });
 });
 
 // Initial render
-renderProducts(filteredProducts); 
+renderProducts(filteredProducts);
+renderFeaturedProducts();
