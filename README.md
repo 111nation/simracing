@@ -2,7 +2,7 @@
 _An affiliate store full of sim racing wheels!_
 ###### Btw im also a sim racing fan :)
 
-[!Note]
+> [!Note]
 > This site was created and maintained with AI.
 > I wanted to experminet and see how fast I can make and deploy a site with my current knowledge. 
 > I believe in working with AI and leveraging its tools
