@@ -21,3 +21,5 @@ _An affiliate store full of sim racing wheels!_
     </td>
   </tr>
 </table>
+
+###### Leave a star and visit us!
